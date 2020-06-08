@@ -7,7 +7,6 @@ import utilTime
 def getMD5(filepath):
     with open(filepath, 'rb') as file:
         data = file.read()
-    print("Unable to read: " + filepath)
     return hashlib.md5(data).hexdigest()
     
 """
