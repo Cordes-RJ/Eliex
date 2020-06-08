@@ -35,7 +35,8 @@ class FileHandler:
     def addReferenceMD(self,string):
         fp = self.repoPath+"/docLib/"+self.callsign+"-"+self.hash
         mdString = mdMaker.mdStringMake(string, os.path.abspath(fp))
-        utilFile.makeFile(self.repoPath+"/mdLib/"+self.callsign+"-"+self.hash, mdString)
+        #utilFile.makeFile(self.repoPath+"/mdLib/"+self.callsign+"-"+self.hash, mdString)
+        utilFile.makeFile(self.repoPath+"/mdLib/"+self.callsign, mdString)
     def moveToFailedImport(self):
         utilFile.editFilePath(self.filepath,self.repoPath+"/failedImport/"+utilFile.getFileName(self.filepath))
           
