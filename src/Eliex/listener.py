@@ -19,7 +19,7 @@ class Listener:
         self.tick = tick
     def Listen(self):
         while True:
-            print("tick...") # For testing
+            #print("tick...") # For testing
             paths = self.getPaths()
             if len(paths) != 0:
                 return paths[0]

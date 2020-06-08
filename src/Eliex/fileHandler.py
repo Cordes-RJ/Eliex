@@ -25,24 +25,24 @@ class FileHandler:
     # checkHash checks in the hashLib to see if the hash is a duplicate.
     # if the hash is a duplicate, returns True, else returns False.
     def checkHash(self):
-        return utilFile.checkForFile(self.repoPath+"/hashLib/"+self.hash)
+        return utilFile.checkForFile(self.makeHashPath())
     # addToHashLib adds a pointer-file to hash library
     def addToHashLib(self):
-        utilFile.makeFile(self.repoPath+"/hashLib/"+self.hash,"")
+        utilFile.makeFile(self.makeHashPath(),"")
     # addToDocLib moves file to docLib with new name (callsign + hash)
     def addToDocLib(self):
-        utilFile.editFilePath(self.filepath,self.repoPath+"/docLib/"+self.callsign+"-"+self.hash)
+        utilFile.editFilePath(self.filepath,self.makeDocPath())
     def addReferenceMD(self,string):
-        fp = self.repoPath+"/docLib/"+self.callsign+"-"+self.hash
-        mdString = mdMaker.mdStringMake(string, os.path.abspath(fp))
+        #fp = self.repoPath+"/docLib/"+self.callsign+"-"+self.hash
+        mdString = mdMaker.mdStringMake(string, self.makeDocPath())
         #utilFile.makeFile(self.repoPath+"/mdLib/"+self.callsign+"-"+self.hash, mdString)
-        utilFile.makeFile(self.repoPath+"/mdLib/"+self.callsign, mdString)
+        utilFile.makeFile(self.makeMdPath(), mdString)
     def moveToFailedImport(self):
         utilFile.editFilePath(self.filepath,self.repoPath+"/failedImport/"+utilFile.getFileName(self.filepath))
     def makeDocPath(self):
-        return self.repoPath+"/docLib/"+self.callsign+"-"+self.hash
-    def makeMDPath(self):
-        return self.repoPath+"/docLib/"+self.callsign+"-"+self.hash
+        return self.repoPath+"/docLib/"+self.callsign+"-"+self.hash+utilFile.getExt(self.filepath)
+    def makeMdPath(self):
+        return self.repoPath+"/mdLib/"+self.callsign + ".md"
     def makeHashPath(self):
         return self.repoPath+"/hashLib/"+self.hash
           

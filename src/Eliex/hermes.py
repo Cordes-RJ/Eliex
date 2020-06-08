@@ -5,6 +5,7 @@ import fileHandler
 import attributes
 import listener
 import config
+import os
 
 #fh = fileHandler.FileHandler("testfolder","testfolder/import/test.txt")
 
@@ -67,7 +68,7 @@ def attributeInputHelp():
 
 # committingResponse notifies user of completion of task
 def committingResponse():
-    print("committing attributes to be saved.")
+    print("committing attributes to be saved...")
 
 # inputAttributeWithExtension sets extension and then asks for input
 def inputAttributeWithExtension(aManager,ext):
@@ -111,12 +112,39 @@ def inputAttributePrompt(aManager):
             return True
         else: # use default extension
             inputAttributeWithDefaultExtension(aManager,userinput)
-            
 
-    
+# atomicImport prompts filehandler to import files with atomicity       
+def atomicImport(fh,aManager):
+    print("importing files...")
+    try:
+        print("creating hash file...")
+        fh.addToHashLib()
+    except:
+        print("failed to create hash, aborting...")
+        return
+    try:
+        print("creating md reference file...")
+        fh.addReferenceMD(aManager.toString())
+    except:
+        utilFile.delFile(fh.makeHashPath()) # remove hash file
+        print("failed to create reference file, aborting...")
+        return
+    try:
+        print("creating doc literal...")
+        fh.addToDocLib()
+    except:
+        utilFile.delFile(fh.makeHashPath()) # remove hash file
+        utilFile.delFile(fh.makeMdPath()) # remove md file
+        print("failed to create doc file, aborting...")
+        return
+    print(fh.callsign + " imported successfully!")
+    return
 
+def pushDocLinkBack(fh):
+    doclink = os.path.abspath(fh.makeDocPath())
+    print("Doc Link for Reference:\n" + doclink +"\n")
+        
 
-#%%
 # mainLoop runs a main prompt loop for file import and listener
         # returns used in lieu of while loop for readability and clarity of
         # exit conditions.
@@ -134,6 +162,8 @@ def mainLoop(C):
     B = inputAttributePrompt(aManager)
     if B == False:
         return # exit loop
+    atomicImport(fh,aManager)
+    pushDocLinkBack(fh)
     
     
     # for testing v
@@ -143,13 +173,13 @@ def mainLoop(C):
     
     
     
-    
+"""
     
 C = loadingConfigs()
-mainLoop(C)
+for i in range(3):
+    mainLoop(C)
 
- 
-#%%
+"""
 
 
 """
