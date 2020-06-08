@@ -16,16 +16,23 @@ class FileHandler:
             return False
         if " " in string:
             return False
-        self.callsign = string + ((24 - len(string))*"_")
+        if "-" in string:
+            return False
+        self.callsign = string
         return True
     # checkHash checks in the hashLib to see if the hash is a duplicate.
     # if the hash is a duplicate, returns True, else returns False.
     def checkHash(self):
         return utilFile.checkForFile(self.repoPath+"/hashLib/"+self.hash)
+    # addToHashLib adds a pointer-file to hash library
     def addToHashLib(self):
         utilFile.makeFile(self.repoPath+"/hashLib/"+self.hash,"")
+    # addToDocLib moves file to docLib with new name (callsign + hash)
     def addToDocLib(self):
         utilFile.editFilePath(self.filepath,self.repoPath+"/docLib/"+self.callsign+"-"+self.hash)
+    def addReferenceMD(self,string):
+        
+          
     
 """
 f = FileHandler()
@@ -33,14 +40,11 @@ x = f.addCallsign("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 x = f.addCallsign("test")
 y = f.callsign
 """
-
-#%%
+"""
 f = FileHandler("testfolder","testfolder/test.txt")
 x = f.hash
-#%%
 x = f.checkHash()
-#%%
 f.addToHashLib()
-x = f.addCallsign("TEST Item")
-#%%
+x = f.addCallsign("TEST_Item")
 f.addToDocLib()
+"""
