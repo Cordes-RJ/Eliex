@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import hashlib
+import utilTime
 
 # getMD5 returns an MD5 hash of a file, will return "" on error.
 def getMD5(filepath):
@@ -13,3 +14,9 @@ def getMD5(filepath):
 x = getMD5('config.ini') out: de88ec9491a8b87697751db5cc5b2fd1
 """
 
+def createRandomHash():
+    return hashlib.md5((utilTime.getDate()).encode('utf-8')).hexdigest()
+
+"""
+print(createRandomHash())
+"""
