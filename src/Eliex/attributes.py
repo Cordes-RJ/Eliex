@@ -20,6 +20,13 @@ class AttributeManager(configparser.ConfigParser):
         if "extension" in kwargs.keys():
             Extension = kwargs["extension"]
         self.read_string(self.currentSection+"\n" + self.extensions[Extension](String))
+    # toString writes all attributes to an ini string which can be written to a .md
+    def toString(self):
+        string = ""
+        for section in self.keys():
+            for attribute in self[section].keys():
+                string += (  attribute + " = " + str(self[section][attribute]) + "\n")
+        return string
 
 # default extension simply returns 
 def defaultExt(s):
@@ -44,10 +51,14 @@ a = AttributeManager()
 a.readIn("x = 32")
 a.readIn("b = 17")
 x = a['DEFAULT']['b']
+"""
 
+"""
 # paperpile test
 a = AttributeManager()
 a.readIn(input("please input: "), extension="paperpile")
-x = [a]
+print("\n\n\n\n")
+print(a.toString())
 
 """
+

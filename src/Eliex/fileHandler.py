@@ -36,15 +36,22 @@ class FileHandler:
         fp = self.repoPath+"/docLib/"+self.callsign+"-"+self.hash
         mdString = mdMaker.mdStringMake(string, os.path.abspath(fp))
         utilFile.makeFile(self.repoPath+"/mdLib/"+self.callsign+"-"+self.hash, mdString)
+    def moveToFailedImport(self):
+        utilFile.editFilePath(self.filepath,self.repoPath+"/failedImport/"+utilFile.getFileName(self.filepath))
           
-    
+
+"""
+f = FileHandler("testfolder","testfolder/testy2.txt")
+f.moveToFailedImport()
+"""
+
 """
 f = FileHandler()
 x = f.addCallsign("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 x = f.addCallsign("test")
 y = f.callsign
-"""
-"""
+
+
 f = FileHandler("testfolder","testfolder/test2.txt")
 x = f.hash
 x = f.checkHash()
