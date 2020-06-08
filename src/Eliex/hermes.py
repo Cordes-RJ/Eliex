@@ -22,7 +22,7 @@ def listening(folder,tick):
 
 # foundAFilePrompt asks a user to confirm integration of a file
 def foundAFilePrompt(fh):
-    print("Eliex found a file: " + utilFile.getFileName(fh.filePath)
+    print("Eliex found a file: " + utilFile.getFileName(fh.filepath)
     + "\nShould we integrate it?")
     if input("y/n: ") == "y":
         return True
@@ -47,6 +47,19 @@ def checkingForDuplicate(fh):
     else:
         True
 
+# inputCallsign handles user input of a callsign for the file
+        # will loop in case of illegal callsign.
+def inputCallsign(fh):
+    while True:
+        print("Please input a callsign, with no spaces or '-' marks, between 3 and 24 characters.")
+        b = fh.addCallsign(input("input Callsign: "))
+        if b:
+            print("Thanks! Callsign accepted!")
+            return
+        else:
+            print("Callsign illegal. Try again...")
+            
+
 
 #%%
 # mainLoop runs a main prompt loop for file import and listener
@@ -55,12 +68,15 @@ def checkingForDuplicate(fh):
 def mainLoop(C):
     F = listening(C['DEFAULT']['Repo']+"/import",int(C['DEFAULT']['ListenTick'])) # listen until file-found
     fh = fileHandler.FileHandler(C['DEFAULT']['Repo'],F) # instantiate filehandler
-    B = foundAFilePrompt() # ask user to confirm integration of file
+    B = foundAFilePrompt(fh) # ask user to confirm integration of file
     if B == False:
         return # exit loop
     B = checkingForDuplicate(fh)
     if B == False:
         return # exit loop
+    inputCallsign(fh)
+    
+    
     
     
     
@@ -71,29 +87,8 @@ mainLoop(C)
  
 #%%
 
-    
 
 
-def checkingForDuplicate(fh):
-    #fh = fileHandler.FileHandler("testfolder","testfolder/import/test.txt")
-    b = fh.checkHash()
-    if b:
-        print("We already have this file!")
-        print("Search in obsidian for the hash: " +fh.hash)
-        moveToFailedImport(fh)
-        return False
-    else:
-        True
-
-def pleaseInputaCallsign(fh):
-    while True:
-        print("Please input a callsign, with no spaces or '-' marks, between 3 and 24 characters.")
-        b = fh.addCallsign(input("input Callsign: "))
-        if b:
-            print("Thanks! Callsign accepted!")
-            return
-        else:
-            print("Callsign illegal. Try again...")
 
 
 ##
