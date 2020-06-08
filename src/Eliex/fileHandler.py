@@ -12,5 +12,9 @@ print(getExt("testfolder\test.txt"))
 """
 
 # Rename file
-def renameFile(filepath, name):
-    os.rename(filepath)
+def editFilePath(filepath, newFilepath):
+    os.rename(filepath, newFilepath)
+    
+"""
+renameFile("otherTest.txt", "testfolder\otherTest.pdf")
+"""
