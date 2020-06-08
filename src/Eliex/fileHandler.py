@@ -2,6 +2,8 @@
 
 import utilFile
 import utilHash
+import mdMaker
+import os
 
 class FileHandler:
     def __init__(self, repoPath, filepath):
@@ -31,7 +33,9 @@ class FileHandler:
     def addToDocLib(self):
         utilFile.editFilePath(self.filepath,self.repoPath+"/docLib/"+self.callsign+"-"+self.hash)
     def addReferenceMD(self,string):
-        
+        fp = self.repoPath+"/docLib/"+self.callsign+"-"+self.hash
+        mdString = mdMaker.mdStringMake(string, os.path.abspath(fp))
+        utilFile.makeFile(self.repoPath+"/mdLib/"+self.callsign+"-"+self.hash, mdString)
           
     
 """
@@ -41,10 +45,11 @@ x = f.addCallsign("test")
 y = f.callsign
 """
 """
-f = FileHandler("testfolder","testfolder/test.txt")
+f = FileHandler("testfolder","testfolder/test2.txt")
 x = f.hash
 x = f.checkHash()
 f.addToHashLib()
 x = f.addCallsign("TEST_Item")
 f.addToDocLib()
+f.addReferenceMD("testing")
 """
