@@ -171,8 +171,6 @@ def mainLoop(C):
     # print(aManager.toString())
     
     
-    
-    
 """
     
 C = loadingConfigs()
