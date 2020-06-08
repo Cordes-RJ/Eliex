@@ -39,6 +39,12 @@ class FileHandler:
         utilFile.makeFile(self.repoPath+"/mdLib/"+self.callsign, mdString)
     def moveToFailedImport(self):
         utilFile.editFilePath(self.filepath,self.repoPath+"/failedImport/"+utilFile.getFileName(self.filepath))
+    def makeDocPath(self):
+        return self.repoPath+"/docLib/"+self.callsign+"-"+self.hash
+    def makeMDPath(self):
+        return self.repoPath+"/docLib/"+self.callsign+"-"+self.hash
+    def makeHashPath(self):
+        return self.repoPath+"/hashLib/"+self.hash
           
 
 """
