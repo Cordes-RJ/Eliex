@@ -36,7 +36,11 @@ def defaultExt(s):
 def paperpileExt(s):
     ind1 = s.find('\n')
     ind2 = s.rfind('\n')
-    return s[ind1+1:ind2]
+    #return s[ind1+1:ind2]
+    x = s[ind1+1:ind2]
+    ind1 = x.find('\n')
+    ind2 = x.rfind('\n')
+    return x[ind1+1:ind2]
     
 """
 # set new section test
