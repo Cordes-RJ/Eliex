@@ -25,7 +25,6 @@ class Listener:
                 return paths
             sleep(self.tick)
             
-            
 """
 L = Listener("testfolder",5)
 x = L.Listen()
