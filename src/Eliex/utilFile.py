@@ -32,6 +32,11 @@ def checkForFile(filepath):
 # getFileName gets the base file name from a path
 def getFileName(filepath):
     return ntpath.basename(filepath)
+
+# delFile deletes a file at path
+def delFile(filepath):
+    os.remove(filepath)
+
     
 """
 print(getFileName("C:/Users/xyz/Documents/Code/Eliex/src/Eliex/testfolder/hashLib/9dd4e461268c8034f5c8564e155c67a6"))
