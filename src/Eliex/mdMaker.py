@@ -13,6 +13,6 @@ def mdStringMake(string, fileName):
     ved += string
     return ved
 
-#%%
+"""
 x = mdStringMake("testing = s", "callsign-THISISSOMERANDOMHASHSTRING")
-    
+"""
