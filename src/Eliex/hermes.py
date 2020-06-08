@@ -12,7 +12,7 @@ import os
 # loadingConfigs loads configs and returns a config manager to loop
 def loadingConfigs():
     print("Loading configuration...")
-    return config.ConfigManager("config.ini")
+    return config.ConfigManager("C:/Users/xyz/Documents/Code/Eliex/src/Eliex/config.ini")
 
 # listening notifies user of status and listens for new files
 def listening(folder,tick):
