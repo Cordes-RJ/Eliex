@@ -33,7 +33,10 @@ def foundAFilePrompt(fh):
 # moveToFailedImport moves a canceled or failed file to another folder
 def moveToFailedImport(fh):
     print("Moving file to failedImport!")
-    fh.moveToFailedImport()
+    try :
+        fh.moveToFailedImport()
+    except:
+        print("Warning: Failed to move file!")
 
 # checkingForDuplicate checks for a duplicate hash
     # returns True if no duplicate found, else false.
@@ -121,21 +124,27 @@ def atomicImport(fh,aManager):
         fh.addToHashLib()
     except:
         print("failed to create hash, aborting...")
+        fh.moveToFailedImport()
         return
     try:
         print("creating md reference file...")
         fh.addReferenceMD(aManager.toString())
     except:
-        utilFile.delFile(fh.makeHashPath()) # remove hash file
         print("failed to create reference file, aborting...")
+        #print("aManagerString for reference>") # testing
+        #print(aManager.toString())
+        #print("------------------------------\n\n") # testing
+        utilFile.delFile(fh.makeHashPath()) # remove hash file
+        fh.moveToFailedImport()
         return
     try:
         print("creating doc literal...")
         fh.addToDocLib()
     except:
+        print("failed to create doc file, aborting...")
         utilFile.delFile(fh.makeHashPath()) # remove hash file
         utilFile.delFile(fh.makeMdPath()) # remove md file
-        print("failed to create doc file, aborting...")
+        fh.moveToFailedImport()
         return
     print(fh.callsign + " imported successfully!")
     return
