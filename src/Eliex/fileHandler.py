@@ -22,6 +22,9 @@ class FileHandler:
             return False
         self.callsign = string
         return True
+    #checkCallSign checks the csLib to see if the callSign is a duplicate
+    def checkCallSign(self):
+        return utilFile.checkForFile(self.makeCallSignPath())
     # checkHash checks in the hashLib to see if the hash is a duplicate.
     # if the hash is a duplicate, returns True, else returns False.
     def checkHash(self):
@@ -45,7 +48,14 @@ class FileHandler:
         return self.repoPath+"/mdLib/"+self.callsign + ".md"
     def makeHashPath(self):
         return self.repoPath+"/hashLib/"+self.hash
+    def makeCallSignPath(self):
+        return self.repoPath+"/csLib/"+self.hash
           
+#%%
+
+
+#%%
+
 
 """
 f = FileHandler("testfolder","testfolder/testy2.txt")
