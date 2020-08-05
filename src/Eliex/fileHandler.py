@@ -23,8 +23,19 @@ class FileHandler:
         self.callsign = string
         return True
     #checkCallSign checks the csLib to see if the callSign is a duplicate
-    def checkCallSign(self):
-        return utilFile.checkForFile(self.makeCallSignPath())
+    def setCallsign(self,CallSign):
+        suffixes = ["-b","-c","-d","-e","-f","-g","-h","-i","-j","-k","-l","-m","-n","-o","-p","-q","-r","-s","-t","-u","-v","-w","-x","-y","-z"]
+        if self.checkCallSign(CallSign):
+            c = 0
+            for i in range(len(suffixes)):
+                c = i
+                if self.checkCallSign(CallSign + suffixes[i]) == False:
+                    break
+            self.callsign = CallSign + suffixes[c]
+        else:
+            self.callsign = CallSign
+    def checkCallSign(self, CallSign):
+        return utilFile.checkForFile(self.makeCallSignPath(CallSign))
     # checkHash checks in the hashLib to see if the hash is a duplicate.
     # if the hash is a duplicate, returns True, else returns False.
     def checkHash(self):
@@ -35,6 +46,8 @@ class FileHandler:
     # addToDocLib moves file to docLib with new name (callsign + hash)
     def addToDocLib(self):
         utilFile.editFilePath(self.filepath,self.makeDocPath())
+    def addToCSLib(self):
+        utilFile.makeFile(self.makeCallSignPath(self.callsign),"")
     def addReferenceMD(self,string):
         #fp = self.repoPath+"/docLib/"+self.callsign+"-"+self.hash
         mdString = mdMaker.mdStringMake(string, self.makeDocPath())
@@ -48,8 +61,8 @@ class FileHandler:
         return self.repoPath+"/mdLib/"+self.callsign + ".md"
     def makeHashPath(self):
         return self.repoPath+"/hashLib/"+self.hash
-    def makeCallSignPath(self):
-        return self.repoPath+"/csLib/"+self.hash
+    def makeCallSignPath(self, CallSign):
+        return self.repoPath+"/csLib/"+CallSign
           
 #%%
 

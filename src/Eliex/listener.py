@@ -11,9 +11,10 @@ class Listener:
     def getPaths(self): # returns all paths in a directory
         paths = []
         for path in os.listdir(self.folder):
-            fullpath = os.path.join(self.folder,path)
-            if os.path.isfile(fullpath):
-                paths.append(fullpath)
+            if path != "desktop.ini":
+                fullpath = os.path.join(self.folder,path)
+                if os.path.isfile(fullpath):
+                    paths.append(fullpath)
         return paths
     def SetTick(self, tick): # update function for tick
         self.tick = tick

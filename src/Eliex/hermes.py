@@ -6,6 +6,7 @@ import attributes
 import listener
 import config
 import os
+import hermes2
 
 #fh = fileHandler.FileHandler("testfolder","testfolder/import/test.txt")
 
@@ -49,7 +50,7 @@ def checkingForDuplicate(fh):
         moveToFailedImport(fh)
         return False
     else:
-        True
+        return True
 
 # inputCallsign handles user input of a callsign for the file
         # will loop in case of illegal callsign.
@@ -96,7 +97,10 @@ def inputAttributeWithDefaultExtension(aManager, userinput):
     except:
         print("failed to parse string.")
         return
-            
+
+     
+"""
+# v001
 # inputAttributePrompt handles the looping insertion of attributes
 def inputAttributePrompt(aManager):
     print("\nWe can now add attributes...")
@@ -115,6 +119,9 @@ def inputAttributePrompt(aManager):
             return True
         else: # use default extension
             inputAttributeWithDefaultExtension(aManager,userinput)
+"""
+def inputAttributePrompt():
+    return hermes2.Satchel().Create()
 
 # atomicImport prompts filehandler to import files with atomicity       
 def atomicImport(fh,aManager):
@@ -124,6 +131,13 @@ def atomicImport(fh,aManager):
         fh.addToHashLib()
     except:
         print("failed to create hash, aborting...")
+        fh.moveToFailedImport()
+        return
+    try:
+        print("creating callsign file...")
+        fh.addToCSLib()
+    except:
+        print("failed to create callsign file, aborting...")
         fh.moveToFailedImport()
         return
     try:
@@ -166,13 +180,22 @@ def mainLoop(C):
     B = checkingForDuplicate(fh)
     if B == False:
         return # exit loop
-    inputCallsign(fh)
+    ##inputCallsign(fh) Call sign will have to be taken afterward
     aManager = attributes.AttributeManager()
-    B = inputAttributePrompt(aManager)
-    if B == False:
-        return # exit loop
-    atomicImport(fh,aManager)
-    pushDocLinkBack(fh)
+    satchel,cancel = inputAttributePrompt()
+    if cancel:
+        print("Canceling Integration...")
+        print("Moving to Failed Import")
+        fh.moveToFailedImport()
+    else: 
+        fh.setCallsign(satchel.Callsign)
+        aManager.readIn(satchel.ProduceINIstring())
+        #B = inputAttributePrompt(aManager) This has to change
+        #if B == False:
+        #    return # exit loop
+        atomicImport(fh,aManager)
+        pushDocLinkBack(fh)
+        print("-----------------------------------\n")
     
     
     # for testing v
