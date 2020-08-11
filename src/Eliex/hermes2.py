@@ -6,7 +6,7 @@ PiF = "" # PiF Global
 # Satchel is a self-contained, duct-taped input-manager and attribute storage object
 class Satchel:
     def __init__(self):
-        self.PiF,self.Title,self.Year,self.Authors,self.Platforms,self.KWs = "","","",[],[],[]
+        self.PiF,self.Title,self.Year,self.Authors,self.Platforms,self.KWs,self.Teams = "","","",[],[],[],[] # Teams added
     def Create(self):
         """
         x = input("Enter Fire-and-Forget String or hit ENTER to continue: ")
@@ -21,7 +21,7 @@ class Satchel:
             self.PiF = amng['DEFAULT']['KWs']
         """
         pos = 0
-        FuncOrder = [inputPiF,inputTitle,inputYear,inputAuthors,inputPlatforms,inputKWs]
+        FuncOrder = [inputPiF,inputTitle,inputYear,inputAuthors,inputPlatforms,inputKWs,inputTeams]
         while True:
             var, cancel, back = FuncOrder[pos]()
             if cancel:
@@ -44,11 +44,13 @@ class Satchel:
                     self.Platforms = var
                 elif pos == 5:
                     self.KWs = var
+                elif pos == 6:  # teams added
+                    self.Teams = var
             if back:
                 pass
             else:  
                 pos += 1
-            if pos>5:
+            if pos>6: # teams added, from 5 to 6
                 break
         # auto, gets last names from authors and gets callsign
         self.AuthorLastNames = self.getLastNames(self.Authors)
@@ -141,6 +143,11 @@ class Satchel:
             for KW in self.KWs:
                 INI+= backlinkBracket("_KW_ " + KW) + ","
             INI+= "\n"
+        if len(self.Teams) > 0:  # teams added
+            INI+= "Teams = "
+            for team in self.Teams:
+                INI+= backlinkBracket("_T_ " + team) + ","
+            INI+= "\n"
         return INI
                  
     
@@ -230,6 +237,19 @@ def inputKWs():
             return KWs, False, False
         else:
             KWs.append(userinput) 
+            
+def inputTeams(): # Teams added
+    print("\nPlease add the teams which apply, (case sensitive): Blue, Red, Green")
+    Teams = []
+    while True:
+        userinput = input("\nInput Team or hit ENTER to complete: ")
+        userinput, cancel, back = checkForSpecialCase(userinput)
+        if cancel or back:
+            return [], cancel, back
+        if userinput == "":
+            return Teams, False, False
+        else:
+            Teams.append(userinput) 
 
 
 #test, success = Satchel().Create()
