@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-import hermes
+import xLoop
 
 def main():
-    C = hermes.loadingConfigs()
+    C = xLoop.loadingConfigs()
     while True:
-        hermes.mainLoop(C)
+        xLoop.mainLoop(C)
         
 if __name__ == "__main__":
     main()

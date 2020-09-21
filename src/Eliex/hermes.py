@@ -168,6 +168,20 @@ def pushDocLinkBack(fh):
     print("Doc Link for Reference:\n" + doclink +"\n")
         
 
+
+"""
+def mainLoop(C):
+    F = listening(C['DEFAULT']['Repo']+"/import",int(C['DEFAULT']['ListenTick'])) # listen until file-found
+    fh = fileHandler.FileHandler(C['DEFAULT']['Repo'],F) # instantiate filehandler
+    B = foundAFilePrompt(fh) # ask user to confirm integration of file
+    if B == False:
+        return # exit loop
+    Name = input("Please Name the File using format: AuthorOrInstitutionNameYear-ShortenedName, eg Avey1927-FunctionAndForms\n") # name the file
+  """  
+    
+
+
+""" V003
 # mainLoop runs a main prompt loop for file import and listener
         # returns used in lieu of while loop for readability and clarity of
         # exit conditions.
@@ -203,7 +217,7 @@ def mainLoop(C):
     # print(aManager.toString())
     
     
-"""
+
     
 C = loadingConfigs()
 for i in range(3):
